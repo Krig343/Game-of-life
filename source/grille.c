@@ -24,14 +24,16 @@ void init_grille_from_file (char * filename, grille* g){
 }
 
 void alloue_grille (int l, int c, grille* g){
-	int i,j;
+	int i,j,k;
 	g = (grille*)malloc(sizeof(grille));
 	g -> nbl = l;
 	g -> nbc =c;
-	g -> cellules = (int **)malloc(sizeof((int *)malloc(sizeof(int)*l))*c);
-	for (i=0; i<g->nbc; i++)
+	g -> cellules = (int **)malloc(l*sizeof(int *));
+	for (k=0; k<g->nbl; k++)
+		g -> cellules[k] = (int *)malloc(c*sizeof(int));
+	for (i=0; i<g->nbl; i++)
 	{
-		for (j=0; j<g->nbl; j++) 
+		for (j=0; j<g->nbc; j++) 
 		{
 			g -> cellules[i][j] = 0;
 		}
