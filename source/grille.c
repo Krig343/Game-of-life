@@ -1,5 +1,17 @@
+/**
+ * \file grille.c
+ * code pour les grilles
+ */
+
 #include "grille.h"
 
+/**
+ * \fn void init_grille_from_file (char * filename, grille *g);
+ * \relates grille
+ * \breif Initialise une grille à partir d'un fichier texte
+ * \param filename le nom du fichier texte
+ * \param g une grille
+ */
 void init_grille_from_file (char * filename, grille* g){
 	FILE * pfile = NULL;
 	pfile = fopen(filename, "r");
@@ -23,6 +35,15 @@ void init_grille_from_file (char * filename, grille* g){
 	return;
 }
 
+/**
+ * \fn void alloue_grille (int l, int c, grille* g);
+ * \relates grille
+ * \brief Alloue l'espace pour une grille et l'initialise à 0
+ * \param l nombre de lignes
+ * \param c nombre de colonnes
+ * \param g une grille
+ * \author Grégory Horny
+ */
 void alloue_grille (int l, int c, grille* g){
 	int i,j,k;
 	g = (grille*)malloc(sizeof(grille));
@@ -40,12 +61,28 @@ void alloue_grille (int l, int c, grille* g){
 	}
 }
 
+/**
+ * \fn void copie_grille (grille gs, grille gd);
+ * \relates grille
+ * \brief Copie une grille
+ * \param gs une grille
+ * \param gd une deuxième grille
+ */
 void copie_grille (grille gs, grille gd){
 	int i, j;
-	for (i=0; i<gs.nbl; ++i) for (j=0; j<gs.nbc; ++j) gd.cellules[i][j] = gs.cellules[i][j];
+	for (i=0; i<gs.nbl; ++i) 
+		for (j=0; j<gs.nbc; ++j) 
+			gd.cellules[i][j] = gs.cellules[i][j];
 	return;	
 }
 
+/**
+ * \fn void libere_grille (grille *g);
+ * \relates grille
+ * \brief Libère l'espace occupé par une grille
+ * \param g une grille
+ * \author Grégory Horny
+ */
 void libere_grille (grille* g){
 	free(g);
 }

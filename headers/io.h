@@ -1,4 +1,9 @@
-#ifndef __IO_H
+/**
+ * \file io.h
+ * header pour l'affichage
+ */
+
+#ifndef __IO_H // indispensable pour éviter les déclarations multiples
 #define __IO_H
 
 #include <stdio.h>

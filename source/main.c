@@ -1,3 +1,8 @@
+/**
+ * \file main.c
+ * code principal
+ */
+
 #include <stdio.h>
 
 #include "grille.h"
