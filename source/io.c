@@ -82,14 +82,12 @@ void debut_jeu(grille *g, grille *gc){
 			}
 			case 'n' :
 			{ // touche "n" pour changer de grille
-				char * newFilename;
-				newFilename = (char *)malloc(19 * sizeof(char));
+				char newFilename [19];
 				printf("Entrez le nom du nouveau fichier (sous forme grilles/nom_du_fichier): ");
 				scanf("%s",newFilename);
 				init_grille_from_file(newFilename,g);
 				alloue_grille (g->nbl, g->nbc, gc);
 				affiche_grille(*g);
-				free (newFilename);
 				break;
 			}
 			default : 
