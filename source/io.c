@@ -4,6 +4,7 @@
  */
 
 #include "io.h"
+#include <string.h>
 
 /**
  * \fn void affiche_trait (int c);
@@ -61,6 +62,7 @@ void efface_grille (grille g){
 
  /**
   * \fn void debut_jeu (grille *g, grille *gc);
+  * \brief Fait évoluer la grille ou permet de changer de grille
   * \relates grille
   * \param g une grille
   * \param gc une deuxième grille
@@ -76,6 +78,18 @@ void debut_jeu(grille *g, grille *gc){
 				evolue(g,gc);
 				efface_grille(*g);
 				affiche_grille(*g);
+				break;
+			}
+			case 'n' :
+			{ // touche "n" pour changer de grille
+				char * newFilename;
+				newFilename = (char *)malloc(19 * sizeof(char));
+				printf("Entrez le nom du nouveau fichier (sous forme grilles/nom_du_fichier): ");
+				scanf("%s",newFilename);
+				init_grille_from_file(newFilename,g);
+				alloue_grille (g->nbl, g->nbc, gc);
+				affiche_grille(*g);
+				free (newFilename);
 				break;
 			}
 			default : 
