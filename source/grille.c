@@ -1,6 +1,6 @@
 /**
  * \file grille.c
- * code pour les grilles
+ * \brief code pour les grilles
  */
 
 #include "grille.h"
@@ -46,7 +46,7 @@ void init_grille_from_file (char * filename, grille* g){
  */
 void alloue_grille (int l, int c, grille* g){
 	int i,j,k;
-	g = (grille*)malloc(sizeof(grille));
+
 	g -> nbl = l;
 	g -> nbc =c;
 	g -> cellules = (int **)malloc(l*sizeof(int *));
@@ -84,5 +84,8 @@ void copie_grille (grille gs, grille gd){
  * \author Grégory Horny
  */
 void libere_grille (grille* g){
-	free(g);
+	int k;
+	for (k=0; k<g->nbl; k++)
+		free (g -> cellules[k]);
+	free (g -> cellules);
 }

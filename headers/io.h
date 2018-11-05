@@ -1,6 +1,6 @@
 /**
  * \file io.h
- * header pour l'affichage
+ * \brief header pour l'affichage
  */
 
 #ifndef __IO_H // indispensable pour éviter les déclarations multiples

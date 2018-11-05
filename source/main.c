@@ -1,6 +1,6 @@
 /**
  * \file main.c
- * code principal
+ * \brief code principal
  */
 
 #include <stdio.h>

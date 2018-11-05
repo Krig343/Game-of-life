@@ -1,6 +1,6 @@
 /**
  * \file io.c
- * code pour les affichages
+ * \brief code pour les affichages
  */
 
 #include "io.h"

@@ -1,6 +1,6 @@
 /**
  * \file grille.h
- * header pour les grilles
+ * \brief header pour les grilles
  */
 
 #ifndef __GRILLE_H // indispensable pour éviter les déclarations multiples
@@ -11,8 +11,6 @@
 #include <assert.h>
 
 /**
- * \typedef grille
- * Création du type grille
  * \struct grille
  * Déclaration de la structure de grille
  */

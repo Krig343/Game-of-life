@@ -1,6 +1,6 @@
 /**
  * \file jeu.c
- * code pour le déroulement du jeu
+ * \brief code pour le déroulement du jeu
  */
 
 #include "jeu.h"

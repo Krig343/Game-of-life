@@ -1,6 +1,6 @@
 /**
  * \file jeu.h
- * header pour le déroulement du jeu
+ * \brief header pour le déroulement du jeu
  */
 
 #ifndef __JEU_H // indispensable pour éviter les déclarations multiples
