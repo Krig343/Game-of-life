@@ -17,7 +17,7 @@ void affiche_trait (int c);
 void affiche_ligne (int c, int* ligne);
 
 // affichage d'une grille
-void affiche_grille (grille g);
+void affiche_grille (grille g, int t);
 
 // effacement d'une grille
 void efface_grille (grille g);

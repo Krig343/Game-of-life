@@ -33,13 +33,14 @@ void affiche_ligne (int c, int* ligne){
 }
 
  /**
-  * \fn void affiche_grille (grille g);
+  * \fn void affiche_grille (grille g, int t);
   * \relates grille
   * \param g une grille
-  * \return affiche une grille
+  * \return affiche une grille et l'évolution au cours du temps
   */ 
-void affiche_grille (grille g){
+void affiche_grille (grille g, int t){
 	int i, l=g.nbl, c=g.nbc;
+	printf("%d",t);
 	printf("\n");
 	affiche_trait(c);
 	for (i=0; i<l; ++i) {
@@ -69,6 +70,7 @@ void efface_grille (grille g){
   * \return interface du jeu
   */ 
 void debut_jeu(grille *g, grille *gc){
+	int temps = 1;
 	char c = getchar(); 
 	while (c != 'q') // touche 'q' pour quitter
 	{ 
@@ -77,19 +79,22 @@ void debut_jeu(grille *g, grille *gc){
 			{ // touche "entree" pour évoluer
 				evolue(g,gc);
 				efface_grille(*g);
-				affiche_grille(*g);
+				affiche_grille(*g, temps);
+				temps ++;
 				break;
 			}
 			case 'n' :
 			{ // touche "n" pour changer de grille
 				libere_grille (g);
 				libere_grille (gc);
+				temps = 1;
 				char newFilename [19];
 				printf("Entrez le nom du nouveau fichier (sous forme grilles/nom_du_fichier): ");
 				scanf("%s",newFilename);
+				printf("\n");
 				init_grille_from_file(newFilename,g);
 				alloue_grille (g->nbl, g->nbc, gc);
-				affiche_grille(*g);
+				affiche_grille(*g, temps);
 				break;
 			}
 			default : 
