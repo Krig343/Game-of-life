@@ -48,7 +48,7 @@ void alloue_grille (int l, int c, grille* g){
 	int i,j,k;
 
 	g -> nbl = l;
-	g -> nbc =c;
+	g -> nbc = c;
 	g -> cellules = (int **)malloc(l*sizeof(int *));
 	for (k=0; k<g->nbl; k++)
 		g -> cellules[k] = (int *)malloc(c*sizeof(int));

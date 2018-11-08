@@ -40,7 +40,7 @@ void affiche_ligne (int c, int* ligne){
   */ 
 void affiche_grille (grille g, int t){
 	int i, l=g.nbl, c=g.nbc;
-	printf("%d",t);
+	printf("temps : %d",t);
 	printf("\n");
 	affiche_trait(c);
 	for (i=0; i<l; ++i) {
@@ -71,13 +71,15 @@ void efface_grille (grille g){
   */ 
 void debut_jeu(grille *g, grille *gc){
 	int temps = 1;
+	int onoffC = 0;
+	printf("Tout au long du jeu appuyez sur:\n 'enter' pour faire évoluer la cellule\n 'q' pour quitter\n 'n' pour charger une nouvelle grille\n 'c' pour des/activer le mode cyclique\n 'v' pour des/activer le vieillissement\n");
 	char c = getchar(); 
 	while (c != 'q') // touche 'q' pour quitter
 	{ 
 		switch (c) {
 			case '\n' : 
 			{ // touche "entree" pour évoluer
-				evolue(g,gc);
+				evolue(g,gc,onoffC);
 				efface_grille(*g);
 				affiche_grille(*g, temps);
 				temps ++;
@@ -95,6 +97,20 @@ void debut_jeu(grille *g, grille *gc){
 				init_grille_from_file(newFilename,g);
 				alloue_grille (g->nbl, g->nbc, gc);
 				affiche_grille(*g, temps);
+				break;
+			}
+			case 'c' :
+			{ // touche 'c' pour passer de cyclique à non cyclique et inversement
+				if (onoffC == 0)
+				{
+					onoffC = 1;
+					printf("mode cyclique activé\n");
+				}
+				else
+				{
+					onoffC = 0;
+					printf("mode cyclique désactivé\n");
+				}
 				break;
 			}
 			default : 
