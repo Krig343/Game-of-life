@@ -24,10 +24,13 @@ void affiche_trait (int c){
   * \param ligne tableau d'entiers
   * \return affiche une ligne de grille
   */ 
-void affiche_ligne (int c, int* ligne){
+void affiche_ligne (int c, int* ligne){ // trouver un moyen de renvoyer la valeur dans la cellule
 	int i;
 	for (i=0; i<c; ++i) 
-		if (ligne[i] == 0 ) printf ("|   "); else printf ("| O ");
+		if (ligne[i] == 0 )
+			printf ("|   ");
+		else
+			printf ("| O "); // modifier pour le vieillissement
 	printf("|\n");
 	return;
 }
@@ -44,7 +47,7 @@ void affiche_grille (grille g, int t){
 	printf("\n");
 	affiche_trait(c);
 	for (i=0; i<l; ++i) {
-		affiche_ligne(c, g.cellules[i]);
+		affiche_ligne(c, g.cellules[i]); // Afficher la valuer du cycle de vie de la cellule
 		affiche_trait(c);
 	}	
 	printf("\n"); 
@@ -72,16 +75,16 @@ void efface_grille (grille g){
 void debut_jeu(grille *g, grille *gc){
 	int temps = 1;
 	int onoffC = 0;
-	printf("Tout au long du jeu appuyez sur:\n 'enter' pour faire évoluer la cellule\n 'q' pour quitter\n 'n' pour charger une nouvelle grille\n 'c' pour des/activer le mode cyclique\n 'v' pour des/activer le vieillissement\n");
+	int onoffV = 0;
 	char c = getchar(); 
 	while (c != 'q') // touche 'q' pour quitter
 	{ 
 		switch (c) {
 			case '\n' : 
 			{ // touche "entree" pour évoluer
-				evolue(g,gc,onoffC);
+				evolue(g,gc,onoffC); // ajouter le contenu de la cellule
 				efface_grille(*g);
-				affiche_grille(*g, temps);
+				affiche_grille(*g, temps); // ajouter onoffV
 				temps ++;
 				break;
 			}
@@ -104,14 +107,27 @@ void debut_jeu(grille *g, grille *gc){
 				if (onoffC == 0)
 				{
 					onoffC = 1;
-					printf("mode cyclique activé\n");
+					printf("mode cyclique activé");
 				}
 				else
 				{
 					onoffC = 0;
-					printf("mode cyclique désactivé\n");
+					printf("mode cyclique désactivé");
 				}
 				break;
+			}
+			case 'v' :
+			{ // touche 'v' pour des/activer le vieillissement
+				if (onoffV == 0)
+				{
+					onoffV = 1;
+					printf("mode vieillissement activé");
+				}
+				else
+				{
+					onoffV = 0;
+					printf("mode vieillissement désactivé");
+				}
 			}
 			default : 
 			{ // touche non traitée

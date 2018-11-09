@@ -134,9 +134,10 @@ int compte_voisins_vivants_non_cyclique (int i, int j, grille g){
  * \brief Fait évoluer les cellules de la grille
  * \param g une grille
  * \param gc une deuxième grille
- * \param c valeur du "boutton" on/off du mode cyclique
+ * \param onoffC valeur du "boutton" on/off du mode cyclique
+ * \param vie nombre de cycle vécu par la cellule
  */
-void evolue (grille *g, grille *gc, int onoffC){
+void evolue (grille *g, grille *gc, int onoffC, int vie){ // ajouter vie dans est_vivant
 	int (* compte_voisins_vivants) (int, int, grille);
 	if (onoffC == 1)
 		compte_voisins_vivants = compte_voisins_vivants_cyclique;
