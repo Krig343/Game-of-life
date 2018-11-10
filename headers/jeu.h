@@ -27,6 +27,11 @@ int compte_voisins_vivants_cyclique (int i, int j, grille g);
 int compte_voisins_vivants_non_cyclique (int i, int j, grille g);
 
 // fait évoluer la grille g d'un pas de temps
-void evolue (grille *g, grille *gc, int c, int vie);
+// le vieillissement n'est pas activé
+void evolue_sans_vieillissement (grille *g, grille *gc, int c);
+
+// fait évoluer la grille g d'un pas de temps
+// le vieillissement est activé
+void evolue_vieillissement (grille *g, grille *gc, int c);
 
 #endif

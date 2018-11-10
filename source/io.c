@@ -4,6 +4,7 @@
  */
 
 #include "io.h"
+#include "jeu.h"
 #include <string.h>
 
 /**
@@ -24,14 +25,26 @@ void affiche_trait (int c){
   * \param ligne tableau d'entiers
   * \return affiche une ligne de grille
   */ 
-void affiche_ligne (int c, int* ligne){ // trouver un moyen de renvoyer la valeur dans la cellule
+void affiche_ligne (int c, int* ligne, int onoffV){ // ajouter onoffV pour un affichage différent
 	int i;
-	for (i=0; i<c; ++i) 
-		if (ligne[i] == 0 )
-			printf ("|   ");
-		else
-			printf ("| O "); // modifier pour le vieillissement
-	printf("|\n");
+	if (onoffV == 0)
+	{
+		for (i=0; i<c; ++i) 
+			if (ligne[i] == 0 )
+				printf ("|   ");
+			else
+				printf ("| 0 ");
+		printf("|\n");
+	}
+	else
+	{
+		for (i=0; i<c; ++i) 
+			if (ligne[i] == 0 )
+				printf ("|   ");
+			else
+				printf ("| %d ",ligne[i]);
+		printf("|\n");
+	}
 	return;
 }
 
@@ -41,13 +54,13 @@ void affiche_ligne (int c, int* ligne){ // trouver un moyen de renvoyer la valeu
   * \param g une grille
   * \return affiche une grille et l'évolution au cours du temps
   */ 
-void affiche_grille (grille g, int t){
+void affiche_grille (grille g, int t, int onoffV){ // ajouter onoffV pour un affichage différent
 	int i, l=g.nbl, c=g.nbc;
 	printf("temps : %d",t);
 	printf("\n");
 	affiche_trait(c);
 	for (i=0; i<l; ++i) {
-		affiche_ligne(c, g.cellules[i]); // Afficher la valuer du cycle de vie de la cellule
+		affiche_ligne(c, g.cellules[i], onoffV); // ajouter onoffV pour un affichage différent
 		affiche_trait(c);
 	}	
 	printf("\n"); 
@@ -82,9 +95,14 @@ void debut_jeu(grille *g, grille *gc){
 		switch (c) {
 			case '\n' : 
 			{ // touche "entree" pour évoluer
-				evolue(g,gc,onoffC); // ajouter le contenu de la cellule
+				void (* evolue) (grille *, grille *, int);
+					if (onoffV == 1)
+						evolue = evolue_vieillissement;
+					else
+						evolue = evolue_sans_vieillissement;
+				(* evolue) (g,gc,onoffC);
 				efface_grille(*g);
-				affiche_grille(*g, temps); // ajouter onoffV
+				affiche_grille(*g, temps, onoffV); // ajouter onoffV pour un affichage différent
 				temps ++;
 				break;
 			}
@@ -99,7 +117,7 @@ void debut_jeu(grille *g, grille *gc){
 				printf("\n");
 				init_grille_from_file(newFilename,g);
 				alloue_grille (g->nbl, g->nbc, gc);
-				affiche_grille(*g, temps);
+				affiche_grille(*g, temps, onoffV);
 				break;
 			}
 			case 'c' :

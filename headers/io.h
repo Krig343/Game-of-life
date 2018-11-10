@@ -14,10 +14,10 @@
 void affiche_trait (int c);
 
 // affichage d'une ligne de la grille
-void affiche_ligne (int c, int* ligne);
+void affiche_ligne (int c, int* ligne, int v);
 
 // affichage d'une grille
-void affiche_grille (grille g, int t);
+void affiche_grille (grille g, int t, int v);
 
 // effacement d'une grille
 void efface_grille (grille g);
