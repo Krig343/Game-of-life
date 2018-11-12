@@ -154,8 +154,14 @@ void evolue_sans_vieillissement (grille *g, grille *gc, int onoffC){
 				if ( v!=2 && v!= 3 ) set_morte(i,j,*g);
 			}
 			else 
-			{ // evolution d'une cellule morte
-				if ( v==3 ) set_vivante(i,j,*g);
+			{ // cellule non viable
+				if (g->cellules[i][j] == -1)
+					set_non_viable(i,j,*g);
+				else
+				{ // evolution d'une cellule morte
+					if ( v==3 )
+						set_vivante(i,j,*g);
+				}
 			}
 		}
 	}
@@ -191,8 +197,14 @@ void evolue_vieillissement (grille *g, grille *gc, int onoffC){
 					g->cellules[i][j] ++;		
 			}
 			else 
-			{ // evolution d'une cellule morte
-				if ( v==3 ) set_vivante(i,j,*g);
+			{ // cellule non viable
+				if (g->cellules[i][j] == -1)
+					set_non_viable(i,j,*g);
+				else
+				{ // evolution d'une cellule morte
+					if ( v==3 )
+						set_vivante(i,j,*g);
+				}
 			}
 		}
 	}

@@ -3,3 +3,5 @@ bin/*
 objets/*
 
 archives/*
+
+doc/html
