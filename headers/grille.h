@@ -58,6 +58,19 @@ static inline void set_morte(int i, int j, grille g){
 }
 
 /**
+ * \fn static inline void set_non_viable (int i, int j, grille g);
+ * \relates grille
+ * \brief Passe une cellule à l'état \a non \a viable
+ * \param i numéro de ligne
+ * \param j numéro de colonne
+ * \param g une grille
+ */
+// rend non viable la cellule non (i,j) de la grille g
+static inline void set_non_viable(int i, int j, grille g){
+    g.cellules[i][j] = -1;
+}
+
+/**
  * \fn static inline int est_vivante (int i, int j, grille g);
  * \relates grille
  * \brief Teste si une cellule est vivante

@@ -31,5 +31,8 @@ dist :
 	tar -cv --lzma Doxyfile makefile $(CPATH)* $(HPATH)* $(OPATH) bin/ grilles/* -f HornyGrégory-GoL-v1_1.tar.xz
 	mv *.tar.xz archives/
 
+docu :
+	doxygen Doxyfile
+
 clean :
 	rm bin/* objets/*

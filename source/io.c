@@ -25,7 +25,7 @@ void affiche_trait (int c){
   * \param ligne tableau d'entiers
   * \return affiche une ligne de grille
   */ 
-void affiche_ligne (int c, int* ligne, int onoffV){ // ajouter onoffV pour un affichage différent
+void affiche_ligne (int c, int* ligne, int onoffV){
 	int i;
 	if (onoffV == 0)
 	{
@@ -33,7 +33,12 @@ void affiche_ligne (int c, int* ligne, int onoffV){ // ajouter onoffV pour un af
 			if (ligne[i] == 0 )
 				printf ("|   ");
 			else
-				printf ("| 0 ");
+			{
+				if (ligne[i] == -1)
+					printf ("| X ");
+				else
+					printf ("| 0 ");
+			}
 		printf("|\n");
 	}
 	else
@@ -42,7 +47,12 @@ void affiche_ligne (int c, int* ligne, int onoffV){ // ajouter onoffV pour un af
 			if (ligne[i] == 0 )
 				printf ("|   ");
 			else
-				printf ("| %d ",ligne[i]);
+			{
+				if (ligne[i] == -1)
+					printf("| X ");
+				else
+					printf ("| %d ",ligne[i]);
+			}
 		printf("|\n");
 	}
 	return;
@@ -54,13 +64,13 @@ void affiche_ligne (int c, int* ligne, int onoffV){ // ajouter onoffV pour un af
   * \param g une grille
   * \return affiche une grille et l'évolution au cours du temps
   */ 
-void affiche_grille (grille g, int t, int onoffV){ // ajouter onoffV pour un affichage différent
+void affiche_grille (grille g, int t, int onoffV){
 	int i, l=g.nbl, c=g.nbc;
 	printf("temps : %d",t);
 	printf("\n");
 	affiche_trait(c);
 	for (i=0; i<l; ++i) {
-		affiche_ligne(c, g.cellules[i], onoffV); // ajouter onoffV pour un affichage différent
+		affiche_ligne(c, g.cellules[i], onoffV);
 		affiche_trait(c);
 	}	
 	printf("\n"); 
@@ -102,7 +112,7 @@ void debut_jeu(grille *g, grille *gc){
 						evolue = evolue_sans_vieillissement;
 				(* evolue) (g,gc,onoffC);
 				efface_grille(*g);
-				affiche_grille(*g, temps, onoffV); // ajouter onoffV pour un affichage différent
+				affiche_grille(*g, temps, onoffV);
 				temps ++;
 				break;
 			}
@@ -112,8 +122,9 @@ void debut_jeu(grille *g, grille *gc){
 				libere_grille (gc);
 				temps = 1;
 				char newFilename [19];
-				printf("Entrez le nom du nouveau fichier (sous forme grilles/nom_du_fichier): ");
+				printf("Entrez le nom du nouveau fichier (sous forme data/grilles/nom_du_fichier): ");
 				scanf("%s",newFilename);
+				getchar();
 				printf("\n");
 				init_grille_from_file(newFilename,g);
 				alloue_grille (g->nbl, g->nbc, gc);
@@ -132,6 +143,7 @@ void debut_jeu(grille *g, grille *gc){
 					onoffC = 0;
 					printf("mode cyclique désactivé");
 				}
+				getchar();
 				break;
 			}
 			case 'v' :
@@ -146,6 +158,8 @@ void debut_jeu(grille *g, grille *gc){
 					onoffV = 0;
 					printf("mode vieillissement désactivé");
 				}
+				getchar();
+				break;
 			}
 			default : 
 			{ // touche non traitée
