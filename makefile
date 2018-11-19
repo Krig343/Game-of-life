@@ -28,12 +28,15 @@ jeu.o : jeu.c jeu.h grille.h
 	mv $@ $(OPATH)
 
 dist :
-	make clean
 	tar -cv --lzma Doxyfile makefile $(CPATH)* $(HPATH)* $(OPATH) bin/ data/* -f HornyGrégory-GoL-v1_0_1.tar.xz
 	mv *.tar.xz archives/
 
 docu :
-	doxygen Doxyfile
+	mkdir doc
+	doxygen
+
+clean_doc :
+	rm -rf doc
 
 clean :
 	rm bin/* objets/*
