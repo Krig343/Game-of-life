@@ -5,6 +5,12 @@ IFLAGS = -I headers
 OPATH = objets/
 CPATH = source/
 HPATH = headers/
+IFLAGS += -Iinclude -I/usr/include/cairo
+LDFLAGS = -lcairo -lm -lX11
+MODE = GRAPHIQUE
+ifeq ($(MODE),TEXTE)
+$(MODE) = TEXTE
+endif
 
 vpath %.h headers
 vpath %.c source
@@ -12,7 +18,7 @@ vpath %.o objets
 vpath main bin
 
 $(EXEC) : $(OBJETS)
-	$(CC) -o $@ $(OPATH)main.o $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
+	$(CC) -o $@ $(OPATH)main.o $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o $(LDFLAGS)
 	mv $@ bin/
 
 main.o : main.c grille.h io.h jeu.h
@@ -24,7 +30,7 @@ io.o : io.c io.h grille.h jeu.h
 jeu.o : jeu.c jeu.h grille.h
 
 %.o :
-	$(CC) -c $< $(IFLAGS)
+	$(CC) -c $< $(IFLAGS) -D$(MODE)
 	mv $@ $(OPATH)
 
 dist :
