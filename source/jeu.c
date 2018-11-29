@@ -7,9 +7,9 @@
 
 /**
  * \fn int compte_voisins_vivants_cyclique (int i, int j, grille g);
- * \relates grille
- * \param i valeur d'une ligne
- * \param j valeur d'une colonne
+ * \relatesalso grille
+ * \param i indice d'une ligne
+ * \param j indice d'une colonne
  * \param g une grille
  * \return le nombre de voisins vivants
  */
@@ -29,11 +29,12 @@ int compte_voisins_vivants_cyclique (int i, int j, grille g){
 
 /**
  * \fn int compte_voisins_vivants_non_cyclique (int i, int j, grille g);
- * \relates grille
- * \param i valeur d'une ligne
- * \param j valeur d'une colonne
+ * \relatesalso grille
+ * \param i indice d'une ligne
+ * \param j indice d'une colonne
  * \param g une grille
  * \return le nombre de voisins vivants
+ * \author Grégory Horny
  */
 int compte_voisins_vivants_non_cyclique (int i, int j, grille g){
 	int v = 0, l = g.nbl-1, c = g.nbc-1;
@@ -130,7 +131,7 @@ int compte_voisins_vivants_non_cyclique (int i, int j, grille g){
 
 /**
  * \fn void evolue_sans_vieillissement (grille *g, grille *gc, int onoffC);
- * \relates grille
+ * \relatesalso grille
  * \brief Fait évoluer les cellules de la grille sans vieillissement
  * \param g une grille
  * \param gc une deuxième grille
@@ -170,11 +171,12 @@ void evolue_sans_vieillissement (grille *g, grille *gc, int onoffC){
 
 /**
  * \fn void evolue_vieillissement (grille *g, grille *gc, int onoffC);
- * \relates grille
+ * \relatesalso grille
  * \brief Fait évoluer les cellules de la grille avec vieillissement
  * \param g une grille
  * \param gc une deuxième grille
  * \param onoffC valeur du "boutton" on/off du mode cyclique
+ * \author Grégory Horny
  */
 void evolue_vieillissement (grille *g, grille *gc, int onoffC){
 	int (* compte_voisins_vivants) (int, int, grille);

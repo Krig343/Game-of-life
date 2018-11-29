@@ -7,7 +7,7 @@
 
 /**
  * \fn void init_grille_from_file (char * filename, grille *g);
- * \relates grille
+ * \relatesalso grille
  * \breif Initialise une grille à partir d'un fichier texte
  * \param filename le nom du fichier texte
  * \param g une grille
@@ -45,7 +45,7 @@ void init_grille_from_file (char * filename, grille* g){
 
 /**
  * \fn void alloue_grille (int l, int c, grille* g);
- * \relates grille
+ * \relatesalso grille
  * \brief Alloue l'espace pour une grille et l'initialise à 0
  * \param l nombre de lignes
  * \param c nombre de colonnes
@@ -71,7 +71,7 @@ void alloue_grille (int l, int c, grille* g){
 
 /**
  * \fn void copie_grille (grille gs, grille gd);
- * \relates grille
+ * \relatesalso grille
  * \brief Copie une grille
  * \param gs une grille
  * \param gd une deuxième grille
@@ -86,7 +86,7 @@ void copie_grille (grille gs, grille gd){
 
 /**
  * \fn void libere_grille (grille *g);
- * \relates grille
+ * \relatesalso grille
  * \brief Libère l'espace occupé par une grille
  * \param g une grille
  * \author Grégory Horny

@@ -11,6 +11,9 @@
 /**
  * \fn static inline int modulo (int i, int m);
  * \brief modulo modifié pour traiter les bords
+ * \param i l'indice de la ligne ou de la colonne
+ * \param m le nombre de lignes ou de colonnes
+ * \return le modulo de i+m par m
  */
 // modulo modifié pour traiter correctement les bords i=0 et j=0
 // dans le calcul des voisins avec bords cycliques

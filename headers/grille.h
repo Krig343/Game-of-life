@@ -33,7 +33,7 @@ void init_grille_from_file (char * filename, grille* g);
 
 /**
  * \fn static inline void set_vivante (int i, int j, grille g);
- * \relates grille
+ * \relatesalso grille
  * \brief Passe une cellule à l'état \a vivant
  * \param i numéro de ligne
  * \param j numéro de colonne
@@ -46,7 +46,7 @@ static inline void set_vivante(int i, int j, grille g){
 
 /**
  * \fn static inline void set_morte (int i, int j, grille g);
- * \relates grille
+ * \relatesalso grille
  * \brief Passe une cellule à l'état \a morte
  * \param i numéro de ligne
  * \param j numéro de colonne
@@ -59,7 +59,7 @@ static inline void set_morte(int i, int j, grille g){
 
 /**
  * \fn static inline void set_non_viable (int i, int j, grille g);
- * \relates grille
+ * \relatesalso grille
  * \brief Passe une cellule à l'état \a non \a viable
  * \param i numéro de ligne
  * \param j numéro de colonne
@@ -72,7 +72,7 @@ static inline void set_non_viable(int i, int j, grille g){
 
 /**
  * \fn static inline int est_vivante (int i, int j, grille g);
- * \relates grille
+ * \relatesalso grille
  * \brief Teste si une cellule est vivante
  * \param i numéro de ligne
  * \param j numéro de colonne
