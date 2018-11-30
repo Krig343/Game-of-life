@@ -41,8 +41,8 @@ Dans le programme en mode graphique:
 
 Les versions déstinées aux rendus seront des archives sous la forme HornyGrégory-GoL-v1_X.tar.xz.
 <br/>Le commit de rendu sur le gitlab aura pour tag le 1.X correspondant.
-<br/>
-<br/>Les versions 1.X.Y sont des modifications secondaires représentant la fin d'un niveau.
+
+Les versions 1.X.Y sont des modifications secondaires représentant la fin d'un niveau.
 
 ## Bibliothèques:
 

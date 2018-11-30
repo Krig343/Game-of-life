@@ -77,6 +77,7 @@ static inline void set_non_viable(int i, int j, grille g){
  * \param i numéro de ligne
  * \param j numéro de colonne
  * \param g une grille
+ * \return 1 si la cellule est vivante et 0 sinon
  */
 // teste si la cellule (i,j) de la grille g est vivante
 static inline int est_vivante(int i, int j, grille g){

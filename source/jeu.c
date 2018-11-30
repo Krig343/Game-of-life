@@ -212,3 +212,113 @@ void evolue_vieillissement (grille *g, grille *gc, int onoffC){
 	}
 	return;
 }
+
+/**
+ * \fn int identique (grille *g1, grille *g2);
+ * \relatesalso grille
+ * \brief Teste si deux grilles sont identiques
+ * \param g1 une grille
+ * \param g2 une deuxième grille
+ * \author Grégory Horny
+ * \return 1 si les deux grilles sont identiques et 0 sinon
+ */
+int identique (grille *g1, grille *g2){
+	if (!grille_morte(g1) && !grille_morte(g2))
+	{
+		for (int i=0; i<g1->nbl; i++)
+			for (int j=0; j<g1->nbc; j++)
+			{
+				if (est_vivante(i,j,*g1)!=est_vivante(i,j,*g2))
+					return 0;
+			}
+		return 1;
+	}
+	else
+		return 0;
+}
+
+/**
+ * \fn int grille_morte (grille *g);
+ * \relatesalso grille
+ * \brief Teste si une grille a toutes ses cellules mortes
+ * \param g une grille
+ * \author Grégory Horny
+ * \return 1 si la grilles est morte et 0 sinon
+ */
+int grille_morte (grille *g){
+	for (int i=0; i<g->nbl; i++)
+		for (int j=0; j<g->nbc; j++)
+			if (est_vivante(i,j,*g))
+				return 0;
+	return 1;
+}
+
+/**
+ * \fn int oscillante (grille* g, int onoffC, int onoffV);
+ * \relatesalso grille
+ * \brief Teste si une grille est oscillante
+ * \param g une grille
+ * \param onoffC le sélecteur du mode cyclique
+ * \param onoffV le sélécteur du mode vieillissement
+ * \author Grégory Horny
+ * \return la période d'oscillation de la grille
+ */
+int oscillante (grille* g, int onoffC, int onoffV){
+	int periode = 0;
+	grille g1, g2;
+	alloue_grille (g->nbl, g->nbc, &g1);
+	copie_grille(*g, g1);
+	alloue_grille (g->nbl, g->nbc, &g2);
+	do
+	{
+		if (onoffV == 0)
+			evolue_sans_vieillissement (&g1, &g2, onoffC);
+		else
+			evolue_vieillissement (&g1,&g2, onoffC);
+		periode ++;
+	}
+	while (!(identique (&g1,g)) && (periode<5000) && !grille_morte(&g1));
+	if (!identique(&g1,g))
+		periode=0;
+	libere_grille(&g1);
+	libere_grille(&g2);
+	return periode;
+}
+
+/**
+ * \fn int est_oscillante (grille *g, int c, int v, int choix_retour);
+ * \relatesalso grille
+ * \brief Teste si une grille est oscillante à partir d'un certain délais
+ * \param g une grille
+ * \param onoffC le sélecteur du mode cyclique
+ * \param onoffV le sélécteur du mode vieillissement
+ * \param choix_retour une variable qui indique quoi retourner
+ * \author Grégory Horny
+ * \return la période d'oscillastion de la grille ou le délais avant l'oscillation (vaut -1 si elle n'oscille pas)
+ */
+int est_oscillante (grille *g, int c, int v, int choix_retour){
+	int periode;
+	int delais = 0;
+	grille g1, g2;
+	alloue_grille (g->nbl, g->nbc, &g1);
+	copie_grille(*g, g1);
+	alloue_grille (g->nbl, g->nbc, &g2);
+	periode = oscillante (g, c, v);
+	while ((periode == 0) && delais<5000)
+	{
+		if (v == 0)
+			evolue_sans_vieillissement (&g1, &g2, c);
+		else
+			evolue_vieillissement (&g1, &g2, c);
+		periode = oscillante (g, c, v);
+		delais ++;
+	}
+	libere_grille(&g1);
+	libere_grille(&g2);
+	if (periode == 0)
+		delais = -1;
+	if (choix_retour == 1)
+		return periode;
+	else
+		return delais;
+}

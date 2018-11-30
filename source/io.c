@@ -90,6 +90,8 @@ void efface_grille (grille g){
 	printf("\n\e[%dA",g.nbl*2 + 5); 
 }
 
+// ajouter fonction oscillante
+
  /**
   * \fn void debut_jeu (grille *g, grille *gc);
   * \brief Fait évoluer la grille et permet de changer de grille ou ses options
@@ -102,6 +104,8 @@ void debut_jeu(grille *g, grille *gc){
 	int temps = 1;
 	int onoffC = 0;
 	int onoffV = 0;
+	int periode;
+	int delais;
 	char c = getchar(); 
 	while (c != 'q') // touche 'q' pour quitter
 	{ 
@@ -164,6 +168,12 @@ void debut_jeu(grille *g, grille *gc){
 				getchar();
 				break;
 			}
+			case: 'o' :
+			{
+				periode = est_oscillante(g, onoffC, onoffV, 1);
+				delais = est_oscillante(g, onoffC, onoffV, 0);
+				break;
+			}
 			default : 
 			{ // touche non traitée
 				printf("\n\e[1A");
@@ -209,19 +219,39 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 			{
 				if (g.cellules[i][j] >= 1)
 				{
-					cairo_rectangle(cr,j*CASE, i*CASE,CASE,CASE);
-					cairo_set_source_rgb (cr, 0.0, 1.0, 0.0);
-					cairo_fill(cr);
-					if (onoffV == 1)
+					if (g.cellules[i][j] == 8)
 					{
-						char contenu[2];
-						sprintf(contenu,"%d",g.cellules[i][j]);
+						cairo_rectangle(cr,j*CASE, i*CASE,CASE,CASE);
+						cairo_set_source_rgb (cr, 1.0, 0.6, 0.0);
+						cairo_fill(cr);
+						if (onoffV == 1)
+						{
+							char contenu[2];
+							sprintf(contenu,"%d",g.cellules[i][j]);
 
-						cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-						cairo_set_font_size(cr,0.6*CASE);
-						cairo_set_source_rgb(cr, 1, 1, 1);
-						cairo_move_to(cr,j*CASE+(0.25*CASE),i*CASE+(0.75*CASE));
-						cairo_show_text(cr,contenu);
+							cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+							cairo_set_font_size(cr,0.6*CASE);
+							cairo_set_source_rgb(cr, 1, 1, 1);
+							cairo_move_to(cr,j*CASE+(0.25*CASE),i*CASE+(0.75*CASE));
+							cairo_show_text(cr,contenu);
+						}
+					}
+					else
+					{
+						cairo_rectangle(cr,j*CASE, i*CASE,CASE,CASE);
+						cairo_set_source_rgb (cr, 0.0, 1.0, 0.0);
+						cairo_fill(cr);
+						if (onoffV == 1)
+						{
+							char contenu[2];
+							sprintf(contenu,"%d",g.cellules[i][j]);
+
+							cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+							cairo_set_font_size(cr,0.6*CASE);
+							cairo_set_source_rgb(cr, 1, 1, 1);
+							cairo_move_to(cr,j*CASE+(0.25*CASE),i*CASE+(0.75*CASE));
+							cairo_show_text(cr,contenu);
+						}
 					}
 				}
 			}
@@ -265,8 +295,11 @@ void debut_jeu(grille *g, grille *gc){
 	XEvent e;
 	int scr;
 	int onoffV = 0;
-	int onoffC = 0;
+	int onoffC = 1;
 	int temps = 0;
+	int periode;
+	int delais;
+	void (* evolue) (grille *, grille *, int);
 	
 	// init the display
 	if(!(dpy=XOpenDisplay(NULL))) {
@@ -297,11 +330,10 @@ void debut_jeu(grille *g, grille *gc){
 			{
 				temps ++;
 				printf("%d\n",temps);
-				void (* evolue) (grille *, grille *, int);
-					if (onoffV == 1)
-						evolue = evolue_vieillissement;
-					else
-						evolue = evolue_sans_vieillissement;
+				if (onoffV == 1)
+					evolue = evolue_vieillissement;
+				else
+					evolue = evolue_sans_vieillissement;
 				(* evolue) (g,gc,onoffC);
 				affiche_grille(*g, cs, onoffV);
 			}
@@ -333,6 +365,19 @@ void debut_jeu(grille *g, grille *gc){
 						onoffV = 0;
 						printf("mode vieillissement désactivé\n");
 					}
+					break;
+				}
+				case 0x20: // touche o
+				{
+					periode = est_oscillante(g, onoffC, onoffV, 1);
+					delais = est_oscillante(g, onoffC, onoffV, 0);
+					if (periode < 5000)
+					{
+						printf("période = %d\n",periode);
+					}
+					else
+						printf("La grille n'oscille pas\n");
+					printf("delais = %d\n",delais);
 					break;
 				}
 				case 0x39: // touche n
