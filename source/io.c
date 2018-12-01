@@ -213,7 +213,7 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 	cr=cairo_create(surface);
 
   	// background
-  	cairo_set_source_rgb (cr, 0.3, 0.3, 0.3);
+  	cairo_set_source_rgb (cr, 0.36, 0.24, 0.07);
 	cairo_paint(cr);
 
 	// les cases
@@ -224,7 +224,7 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 			if (g.cellules[i][j] == -1)
 			{
 				cairo_rectangle(cr,j*CASE,i*CASE,CASE,CASE);
-				cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
+				cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
 				cairo_fill(cr);
 			}
 			else
@@ -234,7 +234,7 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 					if (g.cellules[i][j] == 8)
 					{
 						cairo_rectangle(cr,j*CASE, i*CASE,CASE,CASE);
-						cairo_set_source_rgb (cr, 1.0, 0.6, 0.0);
+						cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
 						cairo_fill(cr);
 						if (onoffV == 1)
 						{
@@ -479,8 +479,8 @@ void debut_jeu(grille *g, grille *gc){
 				{
 					cairo_t *cr;
 					cr=cairo_create(cs);
-					periode = est_oscillante(g, onoffC, onoffV, 1);
-					delais = est_oscillante(g, onoffC, onoffV, 0);
+					periode = oscillante_d(g, onoffC, onoffV, 1);
+					delais = oscillante_d(g, onoffC, onoffV, 0);
 					char contenu_p[2];
 					sprintf(contenu_p,"%d",periode);
 					cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);

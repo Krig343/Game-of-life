@@ -223,18 +223,15 @@ void evolue_vieillissement (grille *g, grille *gc, int onoffC){
  * \return 1 si les deux grilles sont identiques et 0 sinon
  */
 int identique (grille *g1, grille *g2){
-	if (!grille_morte(g1) && !grille_morte(g2))
+	for (int i=0; i<g1->nbl; i++)
 	{
-		for (int i=0; i<g1->nbl; i++)
-			for (int j=0; j<g1->nbc; j++)
-			{
-				if (est_vivante(i,j,*g1)!=est_vivante(i,j,*g2))
-					return 0;
-			}
-		return 1;
+		for (int j=0; j<g1->nbc; j++)
+		{
+			if (est_vivante(i,j,*g1)!=est_vivante(i,j,*g2))
+				return 0;
+		}
 	}
-	else
-		return 0;
+	return 1;
 }
 
 /**
@@ -243,13 +240,17 @@ int identique (grille *g1, grille *g2){
  * \brief Teste si une grille a toutes ses cellules mortes
  * \param g une grille
  * \author Grégory Horny
- * \return 1 si la grilles est morte et 0 sinon
+ * \return 1 si la grille est morte et 0 sinon
  */
 int grille_morte (grille *g){
 	for (int i=0; i<g->nbl; i++)
+	{
 		for (int j=0; j<g->nbc; j++)
+		{
 			if (est_vivante(i,j,*g))
 				return 0;
+		}
+	}
 	return 1;
 }
 
@@ -274,10 +275,10 @@ int oscillante (grille* g, int onoffC, int onoffV){
 		if (onoffV == 0)
 			evolue_sans_vieillissement (&g1, &g2, onoffC);
 		else
-			evolue_vieillissement (&g1,&g2, onoffC);
+			evolue_vieillissement (&g1, &g2, onoffC);
 		periode ++;
 	}
-	while (!(identique (&g1,g)) && (periode<5000) && !grille_morte(&g1));
+	while (!identique(&g1,g) && (periode<5000) && !grille_morte(&g1));
 	if (!identique(&g1,g))
 		periode=0;
 	libere_grille(&g1);
@@ -296,7 +297,7 @@ int oscillante (grille* g, int onoffC, int onoffV){
  * \author Grégory Horny
  * \return la période d'oscillastion de la grille ou le délais avant l'oscillation (vaut -1 si elle n'oscille pas)
  */
-int est_oscillante (grille *g, int c, int v, int choix_retour){
+int oscillante_d (grille *g, int c, int v, int choix_retour){ // A DEBUGGUER
 	int periode;
 	int delais = 0;
 	grille g1, g2;
@@ -310,7 +311,7 @@ int est_oscillante (grille *g, int c, int v, int choix_retour){
 			evolue_sans_vieillissement (&g1, &g2, c);
 		else
 			evolue_vieillissement (&g1, &g2, c);
-		periode = oscillante (g, c, v);
+		periode = oscillante (&g1, c, v);
 		delais ++;
 	}
 	libere_grille(&g1);

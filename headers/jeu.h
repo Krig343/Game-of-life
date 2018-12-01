@@ -44,7 +44,7 @@ int oscillante (grille* g, int onoffC, int onoffV);
 int identique (grille *g1, grille *g2);
 
 // teste si une grille est oscillante à partir d'un certain pas de temps
-int est_oscillante (grille *g, int c, int v, int choix_retour);
+int oscillante_d (grille *g, int c, int v, int choix_retour);
 
 // teste si une grille est oscillante
 int grille_morte (grille *g);
