@@ -24,7 +24,6 @@ $(EXEC) : $(OBJETS)
 main.o : main.c grille.h io.h jeu.h
 
 libjeu.a : $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
-	mkdir lib
 	ar -crv libjeu.a $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
 	ranlib libjeu.a
 	mv $@ lib/
@@ -51,7 +50,7 @@ clean_doc :
 	rm -rf doc
 
 clean_lib :
-	rm -rf lib
+	rm -rf lib/*
 
 clean :
 	rm bin/* objets/*
