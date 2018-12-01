@@ -6,7 +6,7 @@ OPATH = objets/
 CPATH = source/
 HPATH = headers/
 IFLAGS += -Iinclude -I/usr/include/cairo
-LDFLAGS = -lcairo -lm -lX11
+LDFLAGS = -lcairo -lm -lX11 -ljeu -L./lib/
 MODE = GRAPHIQUE
 ifeq ($(MODE),TEXTE)
 $(MODE) = TEXTE
@@ -22,6 +22,12 @@ $(EXEC) : $(OBJETS)
 	mv $@ bin/
 
 main.o : main.c grille.h io.h jeu.h
+
+libjeu.a : $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
+	mkdir lib
+	ar -crv libjeu.a $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
+	ranlib libjeu.a
+	mv $@ lib/
 
 grille.o : grille.c grille.h
 
@@ -43,6 +49,9 @@ docu :
 
 clean_doc :
 	rm -rf doc
+
+clean_lib :
+	rm -rf lib
 
 clean :
 	rm bin/* objets/*

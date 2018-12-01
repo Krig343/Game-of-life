@@ -87,7 +87,7 @@ void affiche_grille (grille g, int t, int onoffV){
   * \return efface une grille
   */ 
 void efface_grille (grille g){
-	printf("\n\e[%dA",g.nbl*2 + 5); 
+	printf("\n\e[%dA",g.nbl*2 + 7); 
 }
 
 // ajouter fonction oscillante
@@ -100,12 +100,20 @@ void efface_grille (grille g){
   * \param gc une deuxième grille
   */ 
 void debut_jeu(grille *g, grille *gc){
-	affiche_grille(*g, 0, 0);
 	int temps = 1;
-	int onoffC = 0;
+	int onoffC = 1;
 	int onoffV = 0;
 	int periode;
 	int delais;
+	if (onoffC == 1)
+		printf("mode cyclique: activé\n");
+	else
+		printf("mode cyclique: désactivé\n");
+	if (onoffV == 1)
+		printf("mode vieillissement activé\n");
+	else
+		printf("mode vieillissement désactivé\n");
+	affiche_grille(*g, 0, 0);
 	char c = getchar(); 
 	while (c != 'q') // touche 'q' pour quitter
 	{ 
@@ -119,6 +127,14 @@ void debut_jeu(grille *g, grille *gc){
 						evolue = evolue_sans_vieillissement;
 				(* evolue) (g,gc,onoffC);
 				efface_grille(*g);
+				if (onoffC == 1)
+					printf("mode cyclique: activé\n");
+				else
+					printf("mode cyclique: désactivé\n");
+				if (onoffV == 1)
+					printf("mode vieillissement activé\n");
+				else
+					printf("mode vieillissement désactivé\n");
 				affiche_grille(*g, temps, onoffV);
 				temps ++;
 				break;
@@ -128,6 +144,8 @@ void debut_jeu(grille *g, grille *gc){
 				libere_grille (g);
 				libere_grille (gc);
 				temps = 1;
+				onoffC = 1;
+				onoffV = 1;
 				char newFilename [19];
 				printf("Entrez le nom du nouveau fichier (sous forme data/grilles/nom_du_fichier): ");
 				scanf("%s",newFilename);
@@ -141,37 +159,31 @@ void debut_jeu(grille *g, grille *gc){
 			case 'c' :
 			{ // touche 'c' pour passer de cyclique à non cyclique et inversement
 				if (onoffC == 0)
-				{
 					onoffC = 1;
-					printf("mode cyclique activé");
-				}
 				else
-				{
 					onoffC = 0;
-					printf("mode cyclique désactivé");
-				}
 				getchar();
 				break;
 			}
 			case 'v' :
 			{ // touche 'v' pour des/activer le vieillissement
 				if (onoffV == 0)
-				{
 					onoffV = 1;
-					printf("mode vieillissement activé");
-				}
 				else
-				{
 					onoffV = 0;
-					printf("mode vieillissement désactivé");
-				}
 				getchar();
 				break;
 			}
-			case: 'o' :
+			case 'o' :
 			{
 				periode = est_oscillante(g, onoffC, onoffV, 1);
 				delais = est_oscillante(g, onoffC, onoffV, 0);
+				printf("période = %d\n",periode);
+				if (delais == -1)
+					printf("La grille n'oscille pas\n");
+				else
+					printf("delais = %d\n",delais);
+				getchar();
 				break;
 			}
 			default : 
@@ -190,7 +202,7 @@ void debut_jeu(grille *g, grille *gc){
   * \fn void affiche_grille (grille g, cairo_surface_t *surface, int onoffV);
   * \relatesalso grille
   * \param g une grille
-  * \param *surface la surface d'affichage
+  * \param surface la surface d'affichage
   * \param onoffV le sélecteur du mode vieillissement
   * \return affiche une grille
   * \author Grégory Horny
@@ -201,7 +213,7 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 	cr=cairo_create(surface);
 
   	// background
-  	cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  	cairo_set_source_rgb (cr, 0.3, 0.3, 0.3);
 	cairo_paint(cr);
 
 	// les cases
@@ -280,12 +292,102 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
 }
 
  /**
+  * \fn void affiche_texte(cairo_surface_t *surface);
+  * \brief Affiche dans la fenêtre le texte concernant les informations
+  * \relatesalso grille
+  * \param g une grille
+  * \param surface une surface cairo
+  * \param t les cycle
+  * \param c le sélecteur du mode cyclique
+  * \param v le sélecteur du mode vieillissement
+  * \author Grégory Horny
+  */ 
+void affiche_texte(grille *g, cairo_surface_t *surface, int t, int c, int v){
+	cairo_t *cr;
+	cr=cairo_create(surface);
+
+	// affichage du cycle
+	cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, 24.0);
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_move_to (cr, g->nbc*CASE+45, 50.0);
+	cairo_show_text (cr, "Cycle:");
+	char contenu[2];
+	sprintf(contenu,"%d",t);
+	cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr,24.0);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_move_to(cr,g->nbc*CASE+130,50.0);
+	cairo_show_text(cr,contenu);
+
+	// affichage de létat du mode cyclique
+	cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, 24.0);
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_move_to (cr, g->nbc*CASE+45, 75.0);
+	cairo_show_text (cr, "Mode cyclique:");
+	if (c == 0)
+	{
+		cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size (cr, 24.0);
+		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+		cairo_move_to (cr, g->nbc*CASE+253, 75.0);
+		cairo_show_text (cr, "désactivé");
+	}
+	else
+	{
+		cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size (cr, 24.0);
+		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+		cairo_move_to (cr, g->nbc*CASE+253, 75.0);
+		cairo_show_text (cr, "activé");
+	}
+	
+	// affichage de l'état du mode vieillissement
+	cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, 24.0);
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_move_to (cr, g->nbc*CASE+45, 100.0);
+	cairo_show_text (cr, "Mode vieillissement:");
+	if (v == 0)
+	{
+		cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size (cr, 24.0);
+		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+		cairo_move_to (cr, g->nbc*CASE+325, 100.0);
+		cairo_show_text (cr, "désactivé");
+	}
+	else
+	{
+		cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size (cr, 24.0);
+		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+		cairo_move_to (cr, g->nbc*CASE+325, 100.0);
+		cairo_show_text (cr, "activé");
+	}
+
+	// affichage de la période et du délais
+	cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, 24.0);
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_move_to (cr, g->nbc*CASE+45, 125.0);
+	cairo_show_text (cr, "Période:");
+
+	cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, 24.0);
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_move_to (cr, g->nbc*CASE+45, 150.0);
+	cairo_show_text (cr, "Délais:");
+
+	cairo_destroy(cr);
+}
+
+ /**
   * \fn void debut_jeu(grille *g, grille *gc);
   * \brief Fait évoluer la grille ou permet de changer de grille
   * \relatesalso grille
   * \param g une grille
   * \param gc une deuxième grille
-  * \return affiche le nombre de cycle d'évolution
   * \author Grégory Horny
   */ 
 void debut_jeu(grille *g, grille *gc){
@@ -310,7 +412,7 @@ void debut_jeu(grille *g, grille *gc){
 	scr=DefaultScreen(dpy);
 	rootwin=RootWindow(dpy, scr);
 
-	win=XCreateSimpleWindow(dpy, rootwin, 1, 1, g->nbc*CASE, g->nbl*CASE, 0, 
+	win=XCreateSimpleWindow(dpy, rootwin, 1, 1, g->nbc*CASE+500, g->nbl*CASE, 0, 
 			BlackPixel(dpy, scr), BlackPixel(dpy, scr));
 
 	XStoreName(dpy, win, "jeu de la vie");
@@ -319,23 +421,25 @@ void debut_jeu(grille *g, grille *gc){
 	
 	// create cairo surface
 	cairo_surface_t *cs; 
-	cs=cairo_xlib_surface_create(dpy, win, DefaultVisual(dpy, 0), g->nbc*CASE, g->nbl*CASE);
+	cs=cairo_xlib_surface_create(dpy, win, DefaultVisual(dpy, 0), g->nbc*CASE+500, g->nbl*CASE);
 
-	printf("%d\n",temps);
 	while(1) {
 		XNextEvent(dpy, &e);
 		if(e.type==Expose && e.xexpose.count<1)
+		{
 			affiche_grille (*g, cs, onoffV);
+			affiche_texte(g, cs, temps, onoffC, onoffV);
+		}
 		else if (e.type==ButtonPress && e.xbutton.button == 1)
 			{
 				temps ++;
-				printf("%d\n",temps);
 				if (onoffV == 1)
 					evolue = evolue_vieillissement;
 				else
 					evolue = evolue_sans_vieillissement;
 				(* evolue) (g,gc,onoffC);
 				affiche_grille(*g, cs, onoffV);
+				affiche_texte(g, cs, temps, onoffC, onoffV);
 			}
 		else if (e.type==KeyPress){
 			switch(e.xkey.keycode){
@@ -344,12 +448,14 @@ void debut_jeu(grille *g, grille *gc){
 					if (onoffC == 0)
 					{
 						onoffC = 1;
-						printf("mode cyclique activé\n");
+						affiche_grille(*g, cs, onoffV);
+						affiche_texte(g, cs, temps, onoffC, onoffV);
 					}
 					else
 					{
 						onoffC = 0;
-						printf("mode cyclique désactivé\n");
+						affiche_grille(*g, cs, onoffV);
+						affiche_texte(g, cs, temps, onoffC, onoffV);
 					}
 					break;
 				}
@@ -358,26 +464,49 @@ void debut_jeu(grille *g, grille *gc){
 					if (onoffV == 0)
 					{
 						onoffV = 1;
-						printf("mode vieillissement activé\n");
+						affiche_grille(*g, cs, onoffV);
+						affiche_texte(g, cs, temps, onoffC, onoffV);
 					}
 					else
 					{
 						onoffV = 0;
-						printf("mode vieillissement désactivé\n");
+						affiche_grille(*g, cs, onoffV);
+						affiche_texte(g, cs, temps, onoffC, onoffV);
 					}
 					break;
 				}
 				case 0x20: // touche o
 				{
+					cairo_t *cr;
+					cr=cairo_create(cs);
 					periode = est_oscillante(g, onoffC, onoffV, 1);
 					delais = est_oscillante(g, onoffC, onoffV, 0);
-					if (periode < 5000)
+					char contenu_p[2];
+					sprintf(contenu_p,"%d",periode);
+					cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+					cairo_set_font_size(cr,24.0);
+					cairo_set_source_rgb(cr, 1, 1, 1);
+					cairo_move_to(cr,g->nbc*CASE+160,125.0);
+					cairo_show_text(cr,contenu_p);
+					if (delais == -1)
 					{
-						printf("période = %d\n",periode);
+						cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+						cairo_set_font_size (cr, 24.0);
+						cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+						cairo_move_to (cr, g->nbc*CASE+141, 150.0);
+						cairo_show_text (cr, "la grille n'oscillera jamais");
 					}
 					else
-						printf("La grille n'oscille pas\n");
-					printf("delais = %d\n",delais);
+					{
+						char contenu_d[2];
+						sprintf(contenu_d,"%d",delais);
+						cairo_select_font_face(cr,"serif",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+						cairo_set_font_size(cr,24.0);
+						cairo_set_source_rgb(cr, 1, 1, 1);
+						cairo_move_to(cr,g->nbc*CASE+141,150.0);
+						cairo_show_text(cr,contenu_d);
+					}
+					cairo_destroy(cr);
 					break;
 				}
 				case 0x39: // touche n
@@ -388,6 +517,8 @@ void debut_jeu(grille *g, grille *gc){
 					libere_grille (g);
 					libere_grille (gc);
 					temps = 1;
+					onoffC = 1;
+					onoffV = 0;
 					char newFilename [19];
 					printf("Entrez le nom du nouveau fichier (sous forme data/grilles/nom_du_fichier): ");
 					scanf("%s",newFilename);
@@ -404,7 +535,7 @@ void debut_jeu(grille *g, grille *gc){
 					scr=DefaultScreen(dpy);
 					rootwin=RootWindow(dpy, scr);
 
-					win=XCreateSimpleWindow(dpy, rootwin, 1, 1, g->nbc*CASE, g->nbl*CASE, 0, 
+					win=XCreateSimpleWindow(dpy, rootwin, 1, 1, g->nbc*CASE+500, g->nbl*CASE, 0, 
 							BlackPixel(dpy, scr), BlackPixel(dpy, scr));
 
 					XStoreName(dpy, win, "jeu de la vie");
@@ -412,10 +543,10 @@ void debut_jeu(grille *g, grille *gc){
 					XMapWindow(dpy, win);
 					
 					cairo_surface_t *cs; 
-					cs=cairo_xlib_surface_create(dpy, win, DefaultVisual(dpy, 0), g->nbc*CASE, g->nbl*CASE);
+					cs=cairo_xlib_surface_create(dpy, win, DefaultVisual(dpy, 0), g->nbc*CASE+500, g->nbl*CASE);
 
-					printf("%d\n",temps);
 					affiche_grille(*g, cs, onoffV);
+					affiche_texte(g, cs, temps, onoffC, onoffV);
 					break;
 				}
 			}

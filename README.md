@@ -6,6 +6,8 @@ Projet de Techniques de Développement de L2S3.
 
 ### Générations du binaire:
 
+La génération du binaire n'est possible que si la binliothèque est existante.
+
 La commande **make** génère les fichiers objets et le binaire pour l'utilisation avec l'interface graphique.
 <br/>Les fichiers objets sont placés dans un répertoire *objets/* et le binaire dans un répertoire *source/*.
 
@@ -15,10 +17,15 @@ La commande **make MODE=TEXTE** génère les fichiers objets et le binaire pour 
 
 La commande **make docu** génère un répertoire *doc/* et y place la documentation HTML issue du *Doxyfile*.
 
+### Génération de la librairie:
+
+Après avoir généré les fichers objets avec **make** utiliser la commande **make libjeu.a** pour compiler la librairie, créer un répertoire lib/ et placer la librairie dans ce réperoitre.
+
 ### Rangement:
 
 La commande **make clean** vide les répertoire *objets/* et *source/*.
 <br/>La commande **make clean_doc** supprime le réperoire *doc/*.
+<br/>La commande **make clean_lib** supprime le répertoire *lib/*.
 
 ### Utilisation du binaire:
 

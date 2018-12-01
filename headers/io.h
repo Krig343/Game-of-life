@@ -39,6 +39,8 @@ void efface_grille (grille g);
  */
 #define CASE 50
 
+void affiche_texte(grille *g, cairo_surface_t *surface, int t, int c, int v);
+
 void debut_jeu(grille *g, grille *gc);
 
 void affiche_grille (grille g, cairo_surface_t *surface, int onoffV);
