@@ -37,16 +37,16 @@ void evolue_sans_vieillissement (grille *g, grille *gc, int c);
 // le vieillissement est activé
 void evolue_vieillissement (grille *g, grille *gc, int c);
 
-// teste si une grille oscille
+// test si une grille oscille
 int oscillante (grille* g, int onoffC, int onoffV);
 
-// teste si deux grilles sont identiques
+// test si deux grilles sont identiques
 int identique (grille *g1, grille *g2);
 
-// teste si une grille est oscillante à partir d'un certain pas de temps
+// test si une grille est oscillante à partir d'un certain pas de temps
 int oscillante_d (grille *g, int c, int v, int choix_retour);
 
-// teste si une grille est oscillante
+// test si une grille est oscillante
 int grille_morte (grille *g);
 
 #endif

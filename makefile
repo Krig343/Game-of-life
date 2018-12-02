@@ -39,7 +39,7 @@ jeu.o : jeu.c jeu.h grille.h
 	mv $@ $(OPATH)
 
 dist :
-	tar -cv --lzma Doxyfile makefile $(CPATH)* $(HPATH)* $(OPATH) bin/ data/* -f HornyGrégory-GoL-v1_0_2.tar.xz
+	tar -cv --lzma Doxyfile makefile $(CPATH)* $(HPATH)* -f HornyGrégory-GoL-v1_1.tar.xz
 	mv *.tar.xz archives/
 
 docu :

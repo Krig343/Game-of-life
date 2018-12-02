@@ -8,7 +8,7 @@
 /**
  * \fn void init_grille_from_file (char * filename, grille *g);
  * \relatesalso grille
- * \breif Initialise une grille à partir d'un fichier texte
+ * \brief Initialise une grille à partir d'un fichier texte
  * \param filename le nom du fichier texte
  * \param g une grille
  */

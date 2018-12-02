@@ -18,7 +18,7 @@ void affiche_trait (int c);
 // affichage d'une ligne de la grille
 void affiche_ligne (int c, int* ligne, int v);
 
-// debute le jeu
+// débute le jeu
 void debut_jeu(grille *g, grille *gc);
 
 // affichage d'une grille

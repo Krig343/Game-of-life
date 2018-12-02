@@ -65,7 +65,7 @@ void affiche_ligne (int c, int* ligne, int onoffV){
   * \param g une grille
   * \param t le numéro du cycle
   * \param onoffV le sélecteur du mode vieillissement
-  * \return affiche une grille et le nombre de cycle d'évolution
+  * \return affiche une grille et le numéro du cycle d'évolution
   */ 
 void affiche_grille (grille g, int t, int onoffV){
 	int i, l=g.nbl, c=g.nbc;
@@ -89,8 +89,6 @@ void affiche_grille (grille g, int t, int onoffV){
 void efface_grille (grille g){
 	printf("\n\e[%dA",g.nbl*2 + 7); 
 }
-
-// ajouter fonction oscillante
 
  /**
   * \fn void debut_jeu (grille *g, grille *gc);
@@ -297,7 +295,7 @@ void affiche_grille (grille g, cairo_surface_t *surface, int onoffV){
   * \relatesalso grille
   * \param g une grille
   * \param surface une surface cairo
-  * \param t les cycle
+  * \param t les cycles
   * \param c le sélecteur du mode cyclique
   * \param v le sélecteur du mode vieillissement
   * \author Grégory Horny

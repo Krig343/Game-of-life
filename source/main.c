@@ -12,7 +12,7 @@
 /**
  * \fn int main (int argc, char ** argv);
  * \param argc nombre d'aguments
- * \param ** argv tableau de poiteur sur les arguments
+ * \param ** argv tableau de pointeur sur les arguments
  */
 int main (int argc, char ** argv) {
 	

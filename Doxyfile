@@ -809,7 +809,7 @@ INPUT_ENCODING         = UTF-8
 # need to set EXTENSION_MAPPING for the extension otherwise the files are not
 # read by doxygen.
 #
-# If left blank the following patterns are tested:*.c, *.cc, *.cxx, *.cpp,
+# If left blank the following patterns are testd:*.c, *.cc, *.cxx, *.cpp,
 # *.c++, *.java, *.ii, *.ixx, *.ipp, *.i++, *.inl, *.idl, *.ddl, *.odl, *.h,
 # *.hh, *.hxx, *.hpp, *.h++, *.cs, *.d, *.php, *.php4, *.php5, *.phtml, *.inc,
 # *.m, *.markdown, *.md, *.mm, *.dox, *.py, *.pyw, *.f90, *.f95, *.f03, *.f08,
@@ -2381,7 +2381,7 @@ DOT_IMAGE_FORMAT       = png
 # If DOT_IMAGE_FORMAT is set to svg, then this option can be set to YES to
 # enable generation of interactive SVG images that allow zooming and panning.
 #
-# Note that this requires a modern browser other than Internet Explorer. Tested
+# Note that this requires a modern browser other than Internet Explorer. testd
 # and working are Firefox, Chrome, Safari, and Opera.
 # Note: For IE 9+ you need to set HTML_FILE_EXTENSION to xhtml in order to make
 # the SVG files visible. Older versions of IE do not have SVG support.

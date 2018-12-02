@@ -216,7 +216,7 @@ void evolue_vieillissement (grille *g, grille *gc, int onoffC){
 /**
  * \fn int identique (grille *g1, grille *g2);
  * \relatesalso grille
- * \brief Teste si deux grilles sont identiques
+ * \brief Test si deux grilles sont identiques
  * \param g1 une grille
  * \param g2 une deuxième grille
  * \author Grégory Horny
@@ -237,7 +237,7 @@ int identique (grille *g1, grille *g2){
 /**
  * \fn int grille_morte (grille *g);
  * \relatesalso grille
- * \brief Teste si une grille a toutes ses cellules mortes
+ * \brief Test si une grille a toutes ses cellules mortes
  * \param g une grille
  * \author Grégory Horny
  * \return 1 si la grille est morte et 0 sinon
@@ -257,7 +257,7 @@ int grille_morte (grille *g){
 /**
  * \fn int oscillante (grille* g, int onoffC, int onoffV);
  * \relatesalso grille
- * \brief Teste si une grille est oscillante
+ * \brief Test si une grille est oscillante
  * \param g une grille
  * \param onoffC le sélecteur du mode cyclique
  * \param onoffV le sélécteur du mode vieillissement
@@ -289,13 +289,13 @@ int oscillante (grille* g, int onoffC, int onoffV){
 /**
  * \fn int est_oscillante (grille *g, int c, int v, int choix_retour);
  * \relatesalso grille
- * \brief Teste si une grille est oscillante à partir d'un certain délais
+ * \brief Test si une grille est oscillante à partir d'un certain délais
  * \param g une grille
  * \param onoffC le sélecteur du mode cyclique
  * \param onoffV le sélécteur du mode vieillissement
  * \param choix_retour une variable qui indique quoi retourner
  * \author Grégory Horny
- * \return la période d'oscillastion de la grille ou le délais avant l'oscillation (vaut -1 si elle n'oscille pas)
+ * \return la période d'oscillation de la grille ou le délais avant l'oscillation (vaut -1 si elle n'oscille pas)
  */
 int oscillante_d (grille *g, int c, int v, int choix_retour){ // A DEBUGGUER
 	int periode;
@@ -305,7 +305,7 @@ int oscillante_d (grille *g, int c, int v, int choix_retour){ // A DEBUGGUER
 	copie_grille(*g, g1);
 	alloue_grille (g->nbl, g->nbc, &g2);
 	periode = oscillante (g, c, v);
-	while ((periode == 0) && delais<5000)
+	while ((periode == 0) && delais<5000 && !grille_morte(&g1))
 	{
 		if (v == 0)
 			evolue_sans_vieillissement (&g1, &g2, c);
