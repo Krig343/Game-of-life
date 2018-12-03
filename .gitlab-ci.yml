@@ -3,7 +3,7 @@ image: ubuntu
 
 pages:
   script:
-  - apk update && apk add doxygen
+  - sudo apt-get install doxygen
   - doxygen Doxyfile
   - mv doc/html/ public/
   artifacts:
