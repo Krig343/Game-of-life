@@ -1,5 +1,5 @@
 # Full project: https://gitlab.com/pages/doxygen
-image: alpine
+image: ubuntu
 
 pages:
   script:
