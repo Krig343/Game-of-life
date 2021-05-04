@@ -1,6 +1,7 @@
 # Le jeu de la vie.
 
 Projet de Techniques de Développement de L2S3.
+Document rédigé par Grégory Horny
 
 ## Utilisation:
 
