@@ -1,0 +1,13 @@
+# Full project: https://gitlab.com/pages/doxygen
+image: ubuntu
+
+pages:
+  script:
+  - apt-get install doxygen
+  - doxygen Doxyfile
+  - mv doc/html/ public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
