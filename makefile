@@ -23,7 +23,8 @@ $(EXEC) : $(OBJETS)
 
 main.o : main.c grille.h io.h jeu.h
 
-libjeu.a : $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
+libjeu.a : $(OBJETS)
+	mkdir -p lib/
 	ar -crv libjeu.a $(OPATH)grille.o $(OPATH)io.o $(OPATH)jeu.o
 	ranlib libjeu.a
 	mv $@ lib/
@@ -43,14 +44,14 @@ dist :
 	mv *.tar.xz archives/
 
 docu :
-	mkdir doc
+	mkdir -p doc/
 	doxygen
 
 clean_doc :
 	rm -rf doc
 
 clean_lib :
-	rm -rf lib/*
+	rm -rf lib
 
 clean :
 	rm bin/* objets/*

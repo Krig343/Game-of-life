@@ -7,7 +7,7 @@ Document rédigé par Grégory Horny
 
 ### Génération du binaire:
 
-La génération du binaire n'est possible que si la bibliothèque est existante.
+La génération du binaire n'est possible que si la librairie est existante.
 
 La commande **make** génère les fichiers objets et le binaire pour l'utilisation avec l'interface graphique.
 <br/>Les fichiers objets sont placés dans un répertoire *objets/* et le binaire dans un répertoire *bin/*.
@@ -20,7 +20,7 @@ La commande **make docu** génère un répertoire *doc/* et y place la documenta
 
 ### Génération de la librairie:
 
-Après avoir généré les fichers objets avec **make** utiliser la commande **make libjeu.a** pour compiler la librairie, créer un répertoire *lib/* et placer la librairie dans ce répertoire.
+Utiliser la commande **make libjeu.a** pour compiler la librairie, créer un répertoire *lib/* et placer la librairie dans ce répertoire.
 
 ### Rangement:
 
